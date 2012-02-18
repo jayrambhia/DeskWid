@@ -34,7 +34,7 @@ import gdbm
 
 def setproxy(command):
     proxystr = command.strip("--proxy ")
-    print proxystr
+    #print proxystr
     if proxystr.startswith("http:"):
         f = gdbm.open("proxyfile","c")
         f["http"] = proxystr

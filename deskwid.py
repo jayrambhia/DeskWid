@@ -171,7 +171,10 @@ class DeskwidWindow:
                     self.get_timeline_thread()
             
             elif "stop" in subcom:
-                self.timeline_flag = False
+                if self.timeline_flag is True:
+                    self.timeline_flag = False
+                    gobject.idle_add(self.change_genlabel, 'Timeline stopped')
+                
             
             else:
                 subcom = 2 
@@ -182,22 +185,27 @@ class DeskwidWindow:
         elif command.startswith("--proxy"):
             #print command
             self.setproxy(command)
+            gobject.idle_add(self.change_genlabel, 'New Proxy set')
         
         elif command.startswith("--consumer_key"):
             #print command
             deskwidutils.setconsumerkey(command.split()[-1])
+            gobject.idle_add(self.change_genlabel, 'Consumer Key set')
         
         elif command.startswith("--consumer_secret"):
             #print command
             deskwidutils.setconsumersecret(command.split()[-1])
+            gobject.idle_add(self.change_genlabel, 'Consumer Secret set')
             #print command.strip("--consumer_secret ")
             
         elif command.startswith("--access_token_key"):
             deskwidutils.setaccesstokenkey(command.split()[-1])
+            gobject.idle_add(self.change_genlabel, 'Access Token set')
             #print command.split()[-1]
             
         elif command.startswith("--access_token_secret"):
             deskwidutils.setaccesstokensecret(command.split()[-1])
+            gobject.idle_add(self.change_genlabel, 'Access Token Secret set')
         
         #elif command.startswith("quit") or command.startswith("exit"):
          #   self.close_application()
