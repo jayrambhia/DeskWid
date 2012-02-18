@@ -18,7 +18,6 @@ It's a Desktop Widget for twitter, imdb, and sticky notes
 
 To use this GUI, you need your consumer key, consumer secret, access tokey key, and access token secret.
 Get all these from https://dev.twitter.com/
-Enter all of the above mentioned keys in the script.
 
 Requirements:
     BeautifulSoup library
