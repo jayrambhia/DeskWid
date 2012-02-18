@@ -1,0 +1,65 @@
+Author          : Jay Rambhia
+email 	        : jayrambhia777@gmail.com
+Git 	        : https://github.com/jayrambhia
+gist 	        : https://gist.github.com/jayrambhia
+@jayrambhia     : http://twitter.com/jayrambhia
+Blog            : http://jayrambhia.wordpress.com
+==================================================
+Name	        : DeskWid
+version	        : 0.1
+Git             : https://github.com/jayrambhia/DeskWid
+compatibility   : Linux (Ubuntu, Mint tested)
+
+Credits :   The Python-Twitter Developers for twitter library, BeautifulSoup library,
+            and many others from whom I learned Pytohn, multithreading, pygtk, and my
+            friends who have encouraged me all this time.
+
+It's a Desktop Widget for twitter, imdb, and sticky notes
+
+To use this GUI, you need your consumer key, consumer secret, access tokey key, and access token secret.
+Get all these from https://dev.twitter.com/
+Enter all of the above mentioned keys in the script.
+
+Requirements:
+    BeautifulSoup library
+    Twitter library(included)
+    imdb library(included)
+    pygtk 2.0 or greater
+    gtk
+    oauth2
+    mechanize library
+    gdbm library
+
+$ python deskwid.py
+
+commands:
+    Tweet:  \t<space><your tweet> 
+            \t Hey! Tweeting using @deskwid #python!
+            
+    timeline:   \timeline
+    
+                \timeline<space><int> int is timeinterval in minutes
+        eg:     \timeline 5
+        
+                \timeline --stop
+                    
+    IMDb:   \imdb<space><movie name>
+      eg:   \imdb the dark knight
+      
+    proxy:  --proxy<space>http://username:password@proxy:port
+        eg: --proxy http://jayrambhia:jayrambhia@10.1.9.36:8080
+            --proxy http://10.1.9.36:8080
+            
+            --proxy<space>https://username:password@proxy:port
+        eg: --proxy https://jayrambhia:jayrambhia@10.1.9.36:8080
+            --proxy https://10.1.9.36:8080
+            
+            --proxy none
+            
+    consumer key        --consumer_key<space><your consumer key>
+    consumer secret     --consumer_secret<space><youe consumer secret>
+    access token key    --access_token_key<space><you access token key>
+    access token secret --access_token_secret<space><your access token secret>
+
+    **  Restart the application after changing proxy settings and changing/adding
+        consumer keys, consumer secret, etc to bring in the changes.
