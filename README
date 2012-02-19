@@ -29,7 +29,7 @@ Requirements:
     mechanize library
     gdbm library
 
-$ python deskwid.py
+$ python DeskWid.py
 
 commands:
     Tweet:  \t<space><your tweet> 
