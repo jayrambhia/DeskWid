@@ -132,7 +132,6 @@ class DeskwidWindow:
     def close_application(self, widget=None, data=None):
         self.savenote()
         self.timeline_flag = False
-        #self.timeline_thread.exit()
         gtk.main_quit()
 
     def savenote(self, widget=None, data=None):
@@ -174,8 +173,6 @@ class DeskwidWindow:
                 if self.timeline_flag is True:
                     self.timeline_flag = False
                     gobject.idle_add(self.change_genlabel, 'Timeline stopped')
-                
-            
             else:
                 subcom = 2 
                 if self.timeline_flag is False:
@@ -183,25 +180,20 @@ class DeskwidWindow:
                     self.get_timeline_thread()
                     
         elif command.startswith("--proxy"):
-            #print command
             self.setproxy(command)
             gobject.idle_add(self.change_genlabel, 'New Proxy set')
         
         elif command.startswith("--consumer_key"):
-            #print command
             deskwidutils.setconsumerkey(command.split()[-1])
             gobject.idle_add(self.change_genlabel, 'Consumer Key set')
         
         elif command.startswith("--consumer_secret"):
-            #print command
             deskwidutils.setconsumersecret(command.split()[-1])
             gobject.idle_add(self.change_genlabel, 'Consumer Secret set')
-            #print command.strip("--consumer_secret ")
             
         elif command.startswith("--access_token_key"):
             deskwidutils.setaccesstokenkey(command.split()[-1])
             gobject.idle_add(self.change_genlabel, 'Access Token set')
-            #print command.split()[-1]
             
         elif command.startswith("--access_token_secret"):
             deskwidutils.setaccesstokensecret(command.split()[-1])
@@ -209,7 +201,9 @@ class DeskwidWindow:
         
         #elif command.startswith("quit") or command.startswith("exit"):
          #   self.close_application()
-                    
+        else:
+            gobject.idle_add(self.change_genlabel, "No such command")
+            return
         self.statusentry.set_text("")
         
     def get_timeline_thread(self):
@@ -222,14 +216,11 @@ class DeskwidWindow:
             tweet_list=[]
             tweet_str=''
             try:
+                gobject.idle_add(self.change_genlabel, 'fetching timeline')
                 timeline = self.api.GetFriendsTimeline(since_id = since_id)
                 if timeline:
                     for i in range(len(timeline)-1,-1,-1):
-                        screen_name = '@'+timeline[i].user.screen_name
-                        user_name = timeline[i].user.name
-                        text = timeline[i].text
-                        tweet = screen_name+' ('+user_name+') '+':\n\t'+text
-                        tweet = deskwidutils.filterunicode(tweet)
+                        tweet = deskwidutils.gettweet(timeline[i])
                         tweet_list.append(tweet)
                         tweet_str = tweet_str + tweet + '\n'
                         gobject.idle_add(self.set_genview, tweet)
@@ -263,29 +254,14 @@ class DeskwidWindow:
         query = self.statusentry.get_text().split("\imdb ")[-1]
         print query
         self.movie = imdb.Movie(query)
-        text = self.get_movie_detail()
+        text = deskwidutils.get_movie_detail(self.movie)
         gobject.idle_add(self.set_genview, text)
         gobject.idle_add(self.change_genlabel, self.movie.title)
         self.statusentry.set_text("")
         return
         
-    def get_movie_detail(self):
-        m = self.movie
-        if not m.title:
-            return "Not Found"
-        genre = " ".join(["Genre:",(", ").join(m.genre)])
-        actors = " ".join(["Actors:",(", ").join(m.actors)])
-        title = " ".join(["Title:",m.title])
-        release_date = " ".join(["Release Date:"," ".join(m.release_date.split("\n"))])
-        rating = " ".join(["Rating:",m.rating])
-        rated = " ".join(["Rated:",m.rated])
-        des = "\n".join(["Description:",m.description])
-        text = ("\n\n").join([title, release_date, rated, rating, genre, actors, des])
-        text = deskwidutils.filterunicode(text)
-        return text
-        
     def change_genlabel(self, text):
-        self.genlabel.set_text(text)
+        self.genlabel.set_text(text+" - DeskWid 0.1")
         
     def set_genview(self, text):
         startiter = self.genbuffer.get_start_iter()

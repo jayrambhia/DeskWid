@@ -121,3 +121,26 @@ def filterunicode(text):
     text = text.replace('&lt;','<')
     
     return text
+    
+def get_movie_detail(movie):
+    m = movie
+    if not m.title:
+        return "Not Found"
+    genre = " ".join(["Genre:",(", ").join(m.genre)])
+    actors = " ".join(["Actors:",(", ").join(m.actors)])
+    title = " ".join(["Title:",m.title])
+    release_date = " ".join(["Release Date:"," ".join(m.release_date.split("\n"))])
+    rating = " ".join(["Rating:",m.rating])
+    rated = " ".join(["Rated:",m.rated])
+    des = "\n".join(["Description:",m.description])
+    text = ("\n\n").join([title, release_date, rated, rating, genre, actors, des])
+    text = filterunicode(text)
+    return text
+
+def gettweet(status):
+    screen_name = '@'+status.user.screen_name
+    user_name = status.user.name
+    text = status.text
+    tweet = screen_name+' ('+user_name+') '+':\n\t'+text
+    tweet = filterunicode(tweet)
+    return tweet
