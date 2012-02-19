@@ -111,3 +111,13 @@ def setaccesstokensecret(access_token_secret):
     f = gdbm.open("accesskeys","c")
     f["access_token_secret"] = access_token_secret
     f.close()
+
+def filterunicode(text):
+    
+    text = text.replace('&#39;',"'")
+    text = text.replace('&quot;','"')
+    text = text.replace('&nbsp;',' ')
+    text = text.replace('&gt;','>')
+    text = text.replace('&lt;','<')
+    
+    return text

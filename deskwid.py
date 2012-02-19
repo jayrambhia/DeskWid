@@ -229,6 +229,7 @@ class DeskwidWindow:
                         user_name = timeline[i].user.name
                         text = timeline[i].text
                         tweet = screen_name+' ('+user_name+') '+':\n\t'+text
+                        tweet = deskwidutils.filterunicode(tweet)
                         tweet_list.append(tweet)
                         tweet_str = tweet_str + tweet + '\n'
                         gobject.idle_add(self.set_genview, tweet)
@@ -280,6 +281,7 @@ class DeskwidWindow:
         rated = " ".join(["Rated:",m.rated])
         des = "\n".join(["Description:",m.description])
         text = ("\n\n").join([title, release_date, rated, rating, genre, actors, des])
+        text = deskwidutils.filterunicode(text)
         return text
         
     def change_genlabel(self, text):
@@ -295,8 +297,8 @@ class DeskwidWindow:
         
     def setproxy(self, command):
         deskwidutils.setproxy(command)
-        
-if __name__ == "__main__":
+
+def deskwid():
     proxy = deskwidutils.getproxy()
     consumer_key = deskwidutils.getconsumerkey()
     consumer_secret = deskwidutils.getconsumersecret()
@@ -309,3 +311,4 @@ if __name__ == "__main__":
         print "Some keys are incorrect"
     DeskwidWindow(api)
     gtk.main()
+
