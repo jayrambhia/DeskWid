@@ -224,8 +224,8 @@ class DeskwidWindow:
                         tweet_list.append(tweet)
                         tweet_str = tweet_str + tweet + '\n'
                         gobject.idle_add(self.set_genview, tweet)
-                    gobject.idle_add(self.change_genlabel, 'timeline')
                     since_id = timeline[0].id
+                gobject.idle_add(self.change_genlabel, 'timeline')
           #          print since_id
             except :
         #        print 'Got some error'
