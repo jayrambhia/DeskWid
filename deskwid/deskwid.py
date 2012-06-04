@@ -226,8 +226,13 @@ class DeskwidWindow:
                         tweet_str = tweet_str + tweet + '\n'
                         gobject.idle_add(self.set_genview, tweet)
                     since_id = timeline[0].id
+<<<<<<< HEAD:deskwid/deskwid.py
                     print since_id
                 gobject.idle_add(self.change_genlabel, 'timeline')
+=======
+                gobject.idle_add(self.change_genlabel, 'timeline')
+          #          print since_id
+>>>>>>> 7e9a838c0063c5023012521c641c1a867f43352a:deskwid.py
             except :
         #        print 'Got some error'
                 gobject.idle_add(self.change_genlabel, 'Unable to fetch timeline')
